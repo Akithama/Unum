@@ -1,0 +1,94 @@
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@{
+    ViewData["Title"] = "Home Page";
+    bool IsLoad = false;
+}
+
+@model Unum.Common.QuestionAnswerDto
+
+
+<div>
+    @if (!IsLoad)
+    {
+        @using (Html.BeginForm("GetQuestion", "Home", FormMethod.Post))
+        {
+            IsLoad = true;
+            <label>Welcome</label>
+            <input id="Begin" type="submit" value="Begin Survey" />
+        }
+    }
+    else
+    {
+
+        <label>@Model.Description</label>
+
+        foreach (var answerList in Model.Answers)
+        {
+            <label class="radio-inline"><input type="radio" name="abc" value="1">@answerList.AnswerDescription</label>
+        }
+
+
+        @*<ul>
+                @foreach (var item in ViewBag.Questions)
+                {
+                    <li>
+                        @item.Description
+                    </li>
+                    foreach (var answerList in item.Answers)
+                    {
+                        <li class="custom-control custom-radio">
+                            <label class="radio-inline"><input type="radio" name="abc" value="1">@answerList.AnswerDescription</label>
+                        </li>
+                    }
+                }
+            </ul>*@
+    }
+
+    @*@if (IsLoad)
+        {
+            <div id="welcome" class="panel panel-primary">
+
+                <input id="submit" type="submit" value="Submit" />
+            </div>
+            IsLoad = true;
+        }*@
+
+
+
+    @*@{
+            bool IsLoad = false;
+        }*@
+
+    @*<div id="question" class="panel panel-primary">
+            <div class="panel-heading">
+                <label class="custom-control-label" for=@Model.QuestionId>@Model.Description</label>
+
+                <ul style="list-style: none;">
+
+                </ul>
+            </div>
+        </div>*@
+
+
+
+
+
+    @*<input type="radio" class="custom-control-input" id=@item.QuestionId name="groupOfDefaultRadios">
+        <label class="custom-control-label" for=@item.QuestionId>@answerList.AnswerDescription</label>
+        @answerList.AnswerDescription*@
+
+
+
+
+</div>
+
+<script>
+    $("#data").hide();
+
+    $("#Begin").click(function () {
+        $("#welcome").hide();
+        $("#data").show();
+    });
+</script>
+
