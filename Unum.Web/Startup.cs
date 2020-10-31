@@ -30,6 +30,7 @@ namespace Unum.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddSession();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDBContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:DbConnection"]));
@@ -56,6 +57,7 @@ namespace Unum.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+            //app.UseSession();
 
             app.UseAuthorization();
 

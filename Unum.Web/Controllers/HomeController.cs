@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Unum.BusinessLogic.Service.Interfaces;
@@ -28,19 +29,18 @@ namespace Unum.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetQuestion(int questionId = 1)
+        public IActionResult GetQuestion()
         {
             QuestionAnswerDto question = null;
-            if (questionId != 0)
-            {
-                question = question1(questionId);
-            }
-            else
-            {
-                question = question1(questionId);
-            }
-            return View("Index", question);
+            var questionAnswerList = _QuestionnaireService.PullQuestions();
+            //TempData["QuestionAnswerList"] = questionAnswerList;  not working
+            //var QuestionAnswerListT = TempData.Peek("Message");
 
+            //need to add Extention
+            //https://stackoverflow.com/questions/56833328/how-to-store-list-object-in-session-variable-using-asp-net-core-and-how-to-fetc
+            question = questionAnswerList.First();
+
+            return View("Index", question);
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace Unum.Web.Controllers
         {
             //save logic
             //sessions, keep list<QuestionAnswerDto>
-
+            
             QuestionAnswerDto question = question1(2);
             return View("Index", question);
         }
@@ -56,8 +56,11 @@ namespace Unum.Web.Controllers
 
         public QuestionAnswerDto question1(int questionId)
         {
+
             return _QuestionnaireService.PullQuestions().Where(x => x.QuestionId == questionId).First();
         }
+
+
         public IActionResult Privacy()
         {
             return View();

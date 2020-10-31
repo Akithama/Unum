@@ -12,7 +12,6 @@ namespace Unum.Business
     public class QuestionnaireService : IQuestionnaireService
     {
         private IUnitOfWork _unitOfWork;
-        private IEnumerable<QuestionAnswerDto> questionList;
 
         public QuestionnaireService(IUnitOfWork unitOfWork)
         {
@@ -54,50 +53,8 @@ namespace Unum.Business
 
                 QuestionAnswerList.Add(questionDto);
             }
-
-            this.questionList = QuestionAnswerList; // for one question request without db call
             return QuestionAnswerList;
         }
 
-        public QuestionAnswerDto GetQuestion(int questionId)
-        {
-            return questionList.Where(x => x.QuestionId == questionId).First();
-        }
     }
 }
-
-
-
-
-
-
-//List<QuestionAnswerDto> QuestionAnswerList = new List<QuestionAnswerDto>();
-//var surveyList = _unitOfWork.Survey.GetAll();
-
-//            foreach (var survey in surveyList)
-//            {
-//                List<Answers> AnswerList = new List<Answers>();
-//var questionsMapperList = _unitOfWork.QuestionAnswer.GetAllBySurveyId(survey.SurveyId);
-//                foreach (var question in questionsMapperList)
-//                {
-//                    //var questionsList= _unitOfWork.QuestionAnswer.GetAllByQuestionId(question.QuestionId);
-//                    Answers answer = new Answers()
-//                    {
-//                        AnswerId = question.AnswerId,
-//                        AnswerDescription = _unitOfWork.Answer.GetById(question.AnswerId).AnswerDescription,
-//                        Points = _unitOfWork.Answer.GetById(question.AnswerId).Points
-//                    };
-//AnswerList.Add(answer);
-
-//                    QuestionAnswerDto questionAnswerList = new QuestionAnswerDto()
-//                    {
-//                        QuestionAnswerMappingId = question.QuestionAnswerMappingId,
-//                        QuestionId = question.QuestionId,
-//                        Description = _unitOfWork.Question.GetById(question.QuestionId).Description,
-//                        Answers = AnswerList
-//                    };
-//QuestionAnswerList.Add(questionAnswerList);
-//                }                
-//            }
-
-//            return QuestionAnswerList;

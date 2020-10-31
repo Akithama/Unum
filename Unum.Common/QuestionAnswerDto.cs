@@ -16,6 +16,6 @@ namespace Unum.Common
 
         public IEnumerable<Answers> Answers { get; set; }
 
-
+        //public IEnumerable<QuestionAnswerDto> QuestionAnswerList { get; set; } can Remove this ?
     }
 }
