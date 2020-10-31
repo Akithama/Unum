@@ -9,5 +9,6 @@ namespace Unum.BusinessLogic.Service.Interfaces
     public interface IQuestionnaireService
     {
         IEnumerable<QuestionAnswerDto> PullQuestions();
+        QuestionAnswerDto GetQuestion(int questionId);
     }
 }

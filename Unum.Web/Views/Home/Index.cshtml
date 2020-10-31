@@ -1,123 +1,48 @@
-﻿<script src="~/lib/jquery/dist/jquery.js"></script>
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 @model Unum.Common.QuestionAnswerDto
 
-<div>
+<div class="container">
 
     @if (Model == null)
     {
         @using (Html.BeginForm("GetQuestion", "Home", FormMethod.Post))
         {
-            <label>Welcome</label>
-            <input id="Begin" type="submit" value="Begin Survey" />
+            <div class="panel panel-default">
+                <div class="row">
+                    <h2>@Html.Label("Welcome")</h2>
+                </div>
+                <div class="row">
+                    <input id="Begin" type="submit" value="Begin Survey" />
+                </div>
+            </div>
         }
     }
     else
     {
         @using (Html.BeginForm("SaveAnswer", "Home", FormMethod.Post))
         {
+            @Html.HiddenFor(m => m.QuestionId, Model.QuestionId)
             @Html.LabelFor(m => m.Description, Model.Description)
             <br />
             foreach (var answer in Model.Answers)
             {
-                @Html.RadioButtonFor(m => m.Answers, answer.Points)
-                <label class="radio-inline">@answer.AnswerDescription</label>
+                @*@Html.RadioButtonFor(m => m.SelectedAnswer, answer.AnswerId)
+                    <label class="radio-inline">@answer.AnswerDescription</label>*@
+
+                @Html.RadioButtonFor(x => x.SelectedAnswer, answer.AnswerId, new { id = "SelectedAnswer" + answer.AnswerId.ToString(), @title = answer.AnswerDescription })
+                @Html.Label(answer.AnswerId.ToString(), " " + answer.AnswerDescription, new { @title = answer.AnswerDescription, @for = "SelectedAnswer" + answer.AnswerId.ToString() })
                 <span></span>
             }
+
+
+
 
             <br /><br />
 
             <input id="btnNext" type="submit" value="Next" />
         }
-
-
-
-
-
-
-
-
-
-
-        @*<label>@Model.Description</label>
-            foreach (var answerList in Model.Answers)
-            {
-                <label class="radio-inline"><input type="radio" name="abc" value="1">@answerList.AnswerDescription</label>
-            }*@
-
-
-
-
-
-
-
-
-
-        @*<ul>
-                @foreach (var item in ViewBag.Questions)
-                {
-                    <li>
-                        @item.Description
-                    </li>
-                    foreach (var answerList in item.Answers)
-                    {
-                        <li class="custom-control custom-radio">
-                            <label class="radio-inline"><input type="radio" name="abc" value="1">@answerList.AnswerDescription</label>
-                        </li>
-                    }
-                }
-            </ul>*@
     }
-
-    @*@if (IsLoad)
-        {
-            <div id="welcome" class="panel panel-primary">
-
-                <input id="submit" type="submit" value="Submit" />
-            </div>
-            IsLoad = true;
-        }*@
-
-
-
-    @*@{
-            bool IsLoad = false;
-        }*@
-
-    @*<div id="question" class="panel panel-primary">
-            <div class="panel-heading">
-                <label class="custom-control-label" for=@Model.QuestionId>@Model.Description</label>
-
-                <ul style="list-style: none;">
-
-                </ul>
-            </div>
-        </div>*@
-
-
-
-
-
-    @*<input type="radio" class="custom-control-input" id=@item.QuestionId name="groupOfDefaultRadios">
-        <label class="custom-control-label" for=@item.QuestionId>@answerList.AnswerDescription</label>
-        @answerList.AnswerDescription*@
-
-
-
-
 </div>
-
-<script>
-    //$("#begin").show();
-    //$("#survey").hide();
-
-    //$("#Begin").click(function () {
-    //    $("#begin").hide();
-    //    $("#survey").show();
-    //});
-</script>
-

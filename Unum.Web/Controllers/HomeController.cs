@@ -24,35 +24,31 @@ namespace Unum.Web.Controllers
 
         public IActionResult Index()
         {
-            var questions = _QuestionnaireService.PullQuestions();
-            //ViewBag.Questions = questions;
-            //ViewBag.IsBegin = false;
             return View();
         }
 
         [HttpPost]
-        public IActionResult GetQuestion(int questionId=1)
+        public IActionResult GetQuestion(int questionId = 1)
         {
             QuestionAnswerDto question = null;
             if (questionId != 0)
             {
-                question = question1(questionId); //_QuestionnaireService.PullQuestions().Where(x => x.QuestionId == questionId).First();
+                question = question1(questionId);
             }
             else
             {
                 question = question1(questionId);
             }
-
-             
-            //ViewBag.IsBegin = true;
             return View("Index", question);
 
         }
 
         [HttpPost]
-        public IActionResult SaveAnswer()
+        public IActionResult SaveAnswer(QuestionAnswerDto questionAnswerDto)
         {
             //save logic
+            //sessions, keep list<QuestionAnswerDto>
+
             QuestionAnswerDto question = question1(2);
             return View("Index", question);
         }
@@ -72,7 +68,5 @@ namespace Unum.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 }

@@ -12,6 +12,7 @@ namespace Unum.Business
     public class QuestionnaireService : IQuestionnaireService
     {
         private IUnitOfWork _unitOfWork;
+        private IEnumerable<QuestionAnswerDto> questionList;
 
         public QuestionnaireService(IUnitOfWork unitOfWork)
         {
@@ -20,6 +21,9 @@ namespace Unum.Business
 
         public IEnumerable<QuestionAnswerDto> PullQuestions()
         {
+            var ssss = _unitOfWork.QuestionAnswer.GetAllBySurveyId(1);
+
+
             List<QuestionAnswerDto> QuestionAnswerList = new List<QuestionAnswerDto>();
 
             List<Questions> questionList = new List<Questions>();
@@ -39,22 +43,30 @@ namespace Unum.Business
                     };
                     answerDtoList.Add(answerDto);
                 }
-                
+
                 QuestionAnswerDto questionDto = new QuestionAnswerDto()
                 {
                     QuestionId = item.QuestionId,
                     Description = item.Description,
                     IsValid = item.IsValid,
-                    Answers=answerDtoList
+                    Answers = answerDtoList
                 };
 
                 QuestionAnswerList.Add(questionDto);
-            }                    
+            }
 
+            this.questionList = QuestionAnswerList; // for one question request without db call
             return QuestionAnswerList;
+        }
+
+        public QuestionAnswerDto GetQuestion(int questionId)
+        {
+            return questionList.Where(x => x.QuestionId == questionId).First();
         }
     }
 }
+
+
 
 
 
