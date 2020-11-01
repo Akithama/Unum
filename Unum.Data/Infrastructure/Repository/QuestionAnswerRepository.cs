@@ -37,5 +37,10 @@ namespace Unum.DataAccess.Infrastructure.Repository
         {
             return Context.QuestionAnswerMapping.Where(x => x.SurveyId == surveyId).ToList();
         }
+
+        public IEnumerable<QuestionAnswerMapping> GetAllBySurveyIdTest()
+        {
+            return Context.QuestionAnswerMapping.Where(x => (x.SurveyId == 1) && (x.SurveyId == 2)).ToList();
+        }
     }
 }

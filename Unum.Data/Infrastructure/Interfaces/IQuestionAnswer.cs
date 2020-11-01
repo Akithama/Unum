@@ -11,5 +11,7 @@ namespace Unum.DataAccess.Infrastructure.Interfaces
         IEnumerable<QuestionAnswerMapping> GetAllBySurveyId(int surveyId);
         IEnumerable<QuestionAnswerMapping> GetAllByQuestionId(int questionId);
         IEnumerable<QuestionAnswerMapping> GetAllByAnswerId(int questionId);
+
+        IEnumerable<QuestionAnswerMapping> GetAllBySurveyIdTest();
     }
 }

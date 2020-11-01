@@ -14,6 +14,8 @@ namespace Unum.DataAccess.Infrastructure.Interfaces
         IQuestionAnswer QuestionAnswer { get; }
 
         ISurvey Survey { get; }
+        IUser User { get; }
+        IUserResponse UserResponse { get; }
 
         void Save();
     }

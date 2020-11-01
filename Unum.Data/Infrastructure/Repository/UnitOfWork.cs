@@ -14,6 +14,9 @@ namespace Unum.DataAccess.Infrastructure.Repository
         private IAnswer _Answer;
         private IQuestionAnswer _QuestionAnswer;
         private ISurvey _Survey;
+        private IUser _user;
+        private IUserResponse _userResponse;
+
         public UnitOfWork(ApplicationDBContext context)
         {
             _context = context;
@@ -68,6 +71,31 @@ namespace Unum.DataAccess.Infrastructure.Repository
                 }
 
                 return _Survey;
+            }
+        }
+        public IUser User
+        {
+            get
+            {
+                if (_user == null)
+                {
+                    _user = new UserRepository(_context);
+                }
+
+                return _user;
+            }
+        }
+
+        public IUserResponse UserResponse
+        {
+            get
+            {
+                if (_userResponse == null)
+                {
+                    _userResponse = new UserResponseRepository(_context);
+                }
+
+                return _userResponse;
             }
         }
         public void Save()

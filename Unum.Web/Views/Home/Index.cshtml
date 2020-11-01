@@ -4,45 +4,40 @@
 
 @model Unum.Common.QuestionAnswerDto
 
-<div class="container">
+    <div class="container">
 
-    @if (Model == null)
-    {
-        @using (Html.BeginForm("GetQuestion", "Home", FormMethod.Post))
+        @if (Model == null)
         {
-            <div class="panel panel-default">
-                <div class="row">
-                    <h2>@Html.Label("Welcome")</h2>
-                </div>
-                <div class="row">
-                    <input id="Begin" type="submit" value="Begin Survey" />
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        @using (Html.BeginForm("SaveAnswer", "Home", FormMethod.Post))
-        {
-            @Html.HiddenFor(m => m.QuestionId, Model.QuestionId)
-            @Html.LabelFor(m => m.Description, Model.Description)
-            <br />
-            foreach (var answer in Model.Answers)
+            @using (Html.BeginForm("GetQuestion", "Home", FormMethod.Post))
             {
-                @*@Html.RadioButtonFor(m => m.SelectedAnswer, answer.AnswerId)
+                <div class="panel panel-default">
+                    <div class="row">
+                        <h2>@Html.Label("Welcome")</h2>
+                    </div>
+                    <div class="row">
+                        <input id="Begin" type="submit" value="Begin Survey" />
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            @using (Html.BeginForm("SaveAnswer", "Home", FormMethod.Post))
+            {
+                @Html.LabelFor(m => m.Description, Model.Description)
+                <br />
+                foreach (var answer in Model.Answers)
+                {
+                    @*@Html.RadioButtonFor(m => m.SelectedAnswer, answer.AnswerId)
                     <label class="radio-inline">@answer.AnswerDescription</label>*@
 
-                @Html.RadioButtonFor(x => x.SelectedAnswer, answer.AnswerId, new { id = "SelectedAnswer" + answer.AnswerId.ToString(), @title = answer.AnswerDescription })
-                @Html.Label(answer.AnswerId.ToString(), " " + answer.AnswerDescription, new { @title = answer.AnswerDescription, @for = "SelectedAnswer" + answer.AnswerId.ToString() })
-                <span></span>
+                    @Html.RadioButtonFor(x => x.SelectedAnswer, answer.AnswerId, new { id = "SelectedAnswer" + answer.AnswerId.ToString(), @title = answer.AnswerDescription })
+                    @Html.Label(answer.AnswerId.ToString(), " " + answer.AnswerDescription, new { @title = answer.AnswerDescription, @for = "SelectedAnswer" + answer.AnswerId.ToString() })
+                    <span></span>
+                }
+
+                <br /><br />
+                <input id="btnNext" type="submit" value="Next" />
             }
-
-
-
-
-            <br /><br />
-
-            <input id="btnNext" type="submit" value="Next" />
         }
-    }
-</div>
+    </div>

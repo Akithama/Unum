@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Unum.Data.Models;
 
-namespace Unum.Data.Modelss
+namespace Unum.Data.Models
 {
     public class UserResponse
     {

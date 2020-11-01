@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using Unum.Data.Modelss;
 
 namespace Unum.Data.Models
 {

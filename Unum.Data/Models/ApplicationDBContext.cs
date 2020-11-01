@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Unum.Data.Modelss;
+using Unum.Data.Models;
 
 namespace Unum.Data.Models
 {

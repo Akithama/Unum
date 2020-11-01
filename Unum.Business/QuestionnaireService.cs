@@ -18,19 +18,29 @@ namespace Unum.Business
             _unitOfWork = unitOfWork;
         }
 
+        public QuestionDto GetQuestionById(int questionId)
+        {
+            var quest = _unitOfWork.Question.GetById(questionId);
+            QuestionDto questionDto = new QuestionDto()
+            {
+                QuestionId = quest.QuestionId,
+                Description = quest.Description,
+                IsValid = quest.IsValid
+            };
+
+            return questionDto;
+        }
+
         public IEnumerable<QuestionAnswerDto> PullQuestions()
         {
-            var ssss = _unitOfWork.QuestionAnswer.GetAllBySurveyId(1);
-
-
             List<QuestionAnswerDto> QuestionAnswerList = new List<QuestionAnswerDto>();
+            List<QuestionAnswerMapping> questionAnswerMapping = _unitOfWork.QuestionAnswer.GetAll().Where(x =>(x.SurveyId == 1) || (x.SurveyId == 2)).ToList();
 
-            List<Questions> questionList = new List<Questions>();
-            var questions = _unitOfWork.Question.GetAll();
+            var QuestionList= questionAnswerMapping.GroupBy(x => x.QuestionId).Select(a => a.FirstOrDefault()).ToList();
 
-            foreach (var item in questions)
+            foreach (var question in QuestionList)
             {
-                var QuestionAnswersList = _unitOfWork.QuestionAnswer.GetAllByQuestionId(item.QuestionId);
+                var QuestionAnswersList = _unitOfWork.QuestionAnswer.GetAllByQuestionId(question.QuestionId);
                 List<Answers> answerDtoList = new List<Answers>();
                 foreach (var ques in QuestionAnswersList)
                 {
@@ -43,18 +53,19 @@ namespace Unum.Business
                     answerDtoList.Add(answerDto);
                 }
 
+                var quest = _unitOfWork.Question.GetById(question.QuestionId);
+
                 QuestionAnswerDto questionDto = new QuestionAnswerDto()
                 {
-                    QuestionId = item.QuestionId,
-                    Description = item.Description,
-                    IsValid = item.IsValid,
-                    Answers = answerDtoList
+                    QuestionId = quest.QuestionId,
+                    Description = quest.Description,
+                    IsValid = quest.IsValid,
+                    Answers = answerDtoList,
+                    SurveyId = question.SurveyId
                 };
-
                 QuestionAnswerList.Add(questionDto);
             }
             return QuestionAnswerList;
         }
-
     }
 }
